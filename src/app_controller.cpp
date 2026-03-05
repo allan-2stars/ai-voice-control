@@ -4,6 +4,7 @@
 #include <led.h>
 #include <mic.h>
 #include <audio_ring_buffer.h>
+#include <network_audio.h>
 #include "app_state.h"
 #include <Arduino.h>
 
@@ -21,6 +22,8 @@ void app_setup()
 
     /* start microphone capture task */
     mic_start_task();
+
+    network_audio_start_task();
 }
 
 void app_loop()
