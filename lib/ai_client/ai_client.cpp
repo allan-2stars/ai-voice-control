@@ -1,9 +1,11 @@
+#include "ai_client.h"
+
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include <config.h>
 #include <speaker.h>
 
-#include "ai_client.h"
+
 
 void ai_send_text(String message)
 {

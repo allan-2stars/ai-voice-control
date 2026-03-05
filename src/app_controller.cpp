@@ -1,11 +1,10 @@
-#include <Arduino.h>
-
-#include <button.h>
-#include <led.h>
-#include <mic.h>
 
 #include "app_controller.h"
-#include <app_state.h>
+#include "button.h"
+#include "led.h"
+#include "mic.h"
+#include "app_state.h"
+#include <Arduino.h>
 
 static AppState state = STATE_IDLE;
 

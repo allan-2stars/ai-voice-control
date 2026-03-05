@@ -1,7 +1,8 @@
+#include "mic.h"
+#include <pins.h>
 #include <Arduino.h>
 #include <driver/i2s.h>
-#include <pins.h>
-#include "mic.h"
+
 
 #define MIC_PORT I2S_NUM_1
 

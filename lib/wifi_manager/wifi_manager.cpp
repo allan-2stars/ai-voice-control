@@ -1,6 +1,8 @@
-#include <WiFi.h>
-#include <config.h>
 #include "wifi_manager.h"
+#include <config.h>
+#include <WiFi.h>
+
+
 
 void wifi_connect()
 {

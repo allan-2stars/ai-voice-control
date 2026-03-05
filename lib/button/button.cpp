@@ -1,6 +1,7 @@
-#include <Arduino.h>
-#include <pins.h>
 #include "button.h"
+#include <pins.h>
+#include <Arduino.h>
+
 
 void button_init()
 {
