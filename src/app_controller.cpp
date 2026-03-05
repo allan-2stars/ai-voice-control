@@ -8,6 +8,10 @@
 #include "app_state.h"
 #include <Arduino.h>
 
+
+bool recording = false;
+bool recording_finished = false;
+
 static AppState state = STATE_IDLE;
 
 void app_setup()
@@ -33,19 +37,26 @@ void app_loop()
     if (pressed && state == STATE_IDLE)
     {
         state = STATE_RECORDING;
+
         Serial.println("Recording Start");
+
+        audio_buffer_reset();
+
+        recording = true;
+
         led_on();
     }
 
     if (!pressed && state == STATE_RECORDING)
     {
         state = STATE_PROCESSING;
-        Serial.println("Recording Stop");
-        led_off();
-    }
 
-    if (state == STATE_RECORDING)
-    {
-        mic_read();
+        Serial.println("Recording Stop");
+
+        recording = false;
+
+        recording_finished = true;
+
+        led_off();
     }
 }

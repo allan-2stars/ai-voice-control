@@ -1,4 +1,5 @@
 #include "mic.h"
+#include <app_state.h>
 #include "audio_ring_buffer.h"
 #include <pins.h>
 #include <Arduino.h>
@@ -60,11 +61,12 @@ static void mic_task(void *param)
 
     while (true)
     {
-        /* Read audio samples from microphone */
         i2s_read(I2S_NUM_1, i2sBuffer, sizeof(i2sBuffer), &bytesRead, portMAX_DELAY);
 
-        /* Push audio samples into ring buffer */
-        audio_buffer_write((uint8_t *)i2sBuffer, bytesRead);
+        if (recording)
+        {
+            audio_buffer_write((uint8_t *)i2sBuffer, bytesRead);
+        }
     }
 }
 
