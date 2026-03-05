@@ -1,4 +1,5 @@
 #include "mic.h"
+#include "audio_ring_buffer.h"
 #include <pins.h>
 #include <Arduino.h>
 #include <driver/i2s.h>
@@ -40,4 +41,48 @@ void mic_read()
     {
         Serial.println("Audio data received");
     }
+}
+
+/*
+--------------------------------------------------
+Microphone FreeRTOS Task
+
+Purpose:
+Continuously read audio samples from I2S
+and push them into the audio ring buffer.
+--------------------------------------------------
+*/
+
+static void mic_task(void *param)
+{
+    int32_t i2sBuffer[256];
+    size_t bytesRead;
+
+    while (true)
+    {
+        /* Read audio samples from microphone */
+        i2s_read(I2S_NUM_1, i2sBuffer, sizeof(i2sBuffer), &bytesRead, portMAX_DELAY);
+
+        /* Push audio samples into ring buffer */
+        audio_buffer_write((uint8_t *)i2sBuffer, bytesRead);
+    }
+}
+
+/*
+--------------------------------------------------
+Start microphone task
+--------------------------------------------------
+*/
+
+void mic_start_task()
+{
+    xTaskCreatePinnedToCore(
+        mic_task,      // Task function
+        "mic_task",    // Task name
+        4096,          // Stack size
+        NULL,          // Task parameter
+        1,             // Priority
+        NULL,          // Task handle
+        1              // Run on Core 1
+    );
 }

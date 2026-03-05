@@ -1,8 +1,9 @@
 
-#include "app_controller.h"
-#include "button.h"
-#include "led.h"
-#include "mic.h"
+#include <app_controller.h>
+#include <button.h>
+#include <led.h>
+#include <mic.h>
+#include <audio_ring_buffer.h>
 #include "app_state.h"
 #include <Arduino.h>
 
@@ -12,7 +13,14 @@ void app_setup()
 {
     button_init();
     led_init();
+    /* initialize microphone hardware */
     mic_init();
+
+    /* initialize audio ring buffer */
+    audio_buffer_init(65536);
+
+    /* start microphone capture task */
+    mic_start_task();
 }
 
 void app_loop()
